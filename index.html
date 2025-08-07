@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Epic Trip Itineraries Globe</title>
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.119/Build/Cesium/Cesium.js"></script>
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.119/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+  <style>
+    html, body, #cesiumContainer {
+      width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div id="cesiumContainer"></div>
+  <script>
+    const viewer = new Cesium.Viewer('cesiumContainer', {
+      terrainProvider: Cesium.createWorldTerrain(),
+      animation: false,
+      timeline: false
+    });
+
+    const cities = [
+      { name: 'Paris', lat: 48.8566, lon: 2.3522 },
+      { name: 'Orlando', lat: 28.5383, lon: -81.3792 },
+      { name: 'Maldives', lat: 3.2028, lon: 73.2207 },
+      { name: 'French Riviera', lat: 43.5528, lon: 7.0174 },
+      { name: 'Park City', lat: 40.6461, lon: -111.4980 },
+      { name: 'New York, NY', lat: 40.7128, lon: -74.0060 },
+      { name: 'Denver', lat: 39.7392, lon: -104.9903 },
+      { name: 'Tokyo', lat: 35.6895, lon: 139.6917 },
+      { name: 'Koh Samui', lat: 9.5120, lon: 100.0136 },
+      { name: 'Maui', lat: 20.7984, lon: -156.3319 },
+      { name: 'Fiji', lat: -17.7134, lon: 178.0650 },
+      { name: 'Cape Town', lat: -33.9249, lon: 18.4241 },
+      { name: 'Los Cabos', lat: 22.8905, lon: -109.9167 },
+      { name: 'Thailand', lat: 15.8700, lon: 100.9925 }
+    ];
+
+    cities.forEach(city => {
+      viewer.entities.add({
+        name: city.name,
+        position: Cesium.Cartesian3.fromDegrees(city.lon, city.lat),
+        point: {
+          pixelSize: 10,
+          color: Cesium.Color.RED,
+          outlineColor: Cesium.Color.WHITE,
+          outlineWidth: 2
+        },
+        label: {
+          text: city.name,
+          font: '14pt sans-serif',
+          style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+          outlineWidth: 2,
+          verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+          pixelOffset: new Cesium.Cartesian2(0, -15)
+        }
+      });
+    });
+
+    viewer.flyTo(viewer.entities);
+  </script>
+</body>
+</html>
